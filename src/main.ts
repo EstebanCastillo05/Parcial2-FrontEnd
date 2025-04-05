@@ -1,25 +1,13 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { bootstrapApplication } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app/app.component';
-import { FormsModule } from '@angular/forms';  
-import { ListComponent } from './app/components/lista/lista.component';
-import { CreateProductComponent } from './app/components/create-product/create-product.component';
-import { EditProductComponent } from './app/components/edit-product/edit-product.component';
-import { routes } from './app/app.routes';  
+import { provideRouter } from '@angular/router';
+import { routes } from './app/app.routes';
+import { provideHttpClient } from '@angular/common/http';
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    ListComponent,
-    CreateProductComponent,
-    EditProductComponent
-  ],
-  imports: [
-    BrowserModule,
-    routes,  
-    FormsModule        
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
-})
-export class AppModule {}
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideHttpClient(),
+    provideRouter(routes)
+  ]
+}).catch(err => console.error(err));

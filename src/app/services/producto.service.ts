@@ -1,18 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Producto } from '../interface/producto'; // Importar la interfaz Producto
+import { Producto } from '../interface/producto';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductoService {
-  private apiUrl = 'http://localhost:3000/productos'; // URL de tu API o mock backend
+  private apiUrl = 'http://localhost:3000/api/parcial2/productos';
+
 
   constructor(private http: HttpClient) {}
 
   // Obtener todos los productos
-  getAllProducts(): Observable<Producto[]> {
+  getAll(): Observable<Producto[]> {
     return this.http.get<Producto[]>(this.apiUrl);
   }
 

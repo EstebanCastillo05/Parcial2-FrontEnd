@@ -1,26 +1,35 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ProductoService } from '../../services/producto.service';
 import { Producto } from '../../interface/producto';
+import { MatTableDataSource } from '@angular/material/table';
 import { MatTableModule } from '@angular/material/table';
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';  
 
 @Component({
   selector: 'app-product-list',
-  templateUrl: './list.component.html',
-  imports: [MatTableModule],
   standalone: true,
-  styleUrls: ['./list.component.css']
+  imports: [
+    CommonModule,
+    MatTableModule,
+    HttpClientModule  
+  ],
+  templateUrl: './lista.component.html',
+  styleUrls: ['./lista.component.css']
 })
-export class ListComponent {
+export class ProductoListComponent implements OnInit {
+  dataSource = new MatTableDataSource<Producto>();
   displayedColumns: string[] = ['id', 'nombre', 'descripcion', 'precio', 'cantidadStock', 'categoria'];
-  dataSource: Producto[] = [];
 
-  constructor(private productoService: ProductoService) {}
+  constructor(private productService: ProductoService) {}
 
   ngOnInit(): void {
-    this.productoService.getAllProducts().subscribe(productos => {
-      this.dataSource = productos;
-    }, error => {
-      console.error('Error al obtener productos:', error);
+    this.productService.getAll().subscribe({
+      next: (data) => {
+        this.dataSource.data = data;
+      },
+      error: (err) => console.error('Error al obtener los productos', err)
+      
     });
   }
 }
