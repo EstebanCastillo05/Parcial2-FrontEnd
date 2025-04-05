@@ -1,0 +1,31 @@
+<mat-card>
+  <form (ngSubmit)="submitForm(productForm)" #productForm="ngForm">
+    <mat-form-field appearance="fill">
+      <mat-label>Nombre</mat-label>
+      <input matInput [(ngModel)]="productoCreate.nombre" name="nombre" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Descripción</mat-label>
+      <input matInput [(ngModel)]="productoCreate.descripcion" name="descripcion" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Precio</mat-label>
+      <input matInput [(ngModel)]="productoCreate.precio" name="precio" type="number" required (input)="validatePrice()" />
+      <mat-error *ngIf="priceInvalid">El precio debe ser mayor que 0</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Cantidad en stock</mat-label>
+      <input matInput [(ngModel)]="productoCreate.cantidadStock" name="cantidadStock" type="number" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Categoría</mat-label>
+      <input matInput [(ngModel)]="productoCreate.categoria" name="categoria" required />
+    </mat-form-field>
+
+    <button mat-raised-button type="submit" [disabled]="productForm.invalid">Crear Producto</button>
+  </form>
+</mat-card>
